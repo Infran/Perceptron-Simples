@@ -1,6 +1,6 @@
-bias:int = 1;
+bias = 1;
 
-counter = 0;
+contador = 0;
 
 v = [
     [bias , 1, 1],
@@ -14,21 +14,20 @@ v = [
     [bias , 3.5, 1.5]
 ];
 
-parametros_iniciais = [6, -4, 1];
-parametros_atuais = parametros_iniciais;
-parametros_antigos = parametros_atuais;
+w = [6, -4, 1];
+
+parametros = w;
 
 taxa_aprendizado = 0.9;
 objetivos = [0, 1, 0, 0, 1, 1, 1, 0, 0];
 
-S = [0, 0, 0];
-
-tipo_erro = [];
 continua = True;
 while continua == True:
-    counter += 1;
+    contador += 1;
+    tipo_erro = [];
+
     def soma(i):
-        return parametros_atuais[0] + parametros_atuais[1] * v[i][1] + parametros_atuais[2] * v[i][2];
+        return parametros[0] + parametros[1] * v[i][1] + parametros[2] * v[i][2];
 
     resultados = [soma(i)for i in range(len(v))];
 
@@ -62,7 +61,7 @@ while continua == True:
             print(resultados_testados);
             return False;
         else:
-            parametros_antigos = parametros_atuais;
+            parametros_antigos = parametros;
             for i in range(len(divergencias)):
                 if (tipo_erro[i] == "+"):
                     S[0] += divergencias[i][0];
@@ -72,18 +71,16 @@ while continua == True:
                     S[0] -= divergencias[i][0];
                     S[1] -= divergencias[i][1];
                     S[2] -= divergencias[i][2];
-            parametros_atuais[0] = parametros_antigos[0] + taxa_aprendizado * S[0];
-            parametros_atuais[1] = parametros_antigos[1] + taxa_aprendizado * S[1];
-            parametros_atuais[2] = parametros_antigos[2] + taxa_aprendizado * S[2];
-            print("Parametros atuais: " + str(parametros_atuais));
+            parametros[0] = parametros_antigos[0] + taxa_aprendizado * S[0];
+            parametros[1] = parametros_antigos[1] + taxa_aprendizado * S[1];
+            parametros[2] = parametros_antigos[2] + taxa_aprendizado * S[2];
+            print("Parametros atuais: " + str(parametros));
             print("Parametros antigos: " + str(parametros_antigos));
             print("S: " + str(S));
             print("Tipo de erro: " + str(tipo_erro));
             print("Divergências: " + str(divergencias));
             print("\n");
-            S.clear();
-            tipo_erro.clear();
             return True;
     continua = começaAprendizado();
 
-print(counter);
+print(contador);
