@@ -1,9 +1,3 @@
-from ast import Return, While
-from lib2to3.pytree import convert
-from tracemalloc import start
-from xmlrpc.client import Boolean, boolean
-
-
 bias:int = 1;
 
 counter = 0;
@@ -30,7 +24,7 @@ objetivos = [0, 1, 0, 0, 1, 1, 1, 0, 0];
 S = [0, 0, 0];
 
 tipo_erro = [];
-continua:Boolean = True;
+continua = True;
 while continua == True:
     counter += 1;
     def soma(i):
