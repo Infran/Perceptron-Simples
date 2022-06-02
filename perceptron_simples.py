@@ -16,8 +16,6 @@ v = [
 
 w = [6, -4, 1];
 
-parametros = w;
-
 taxa_aprendizado = 0.9;
 objetivos = [0, 1, 0, 0, 1, 1, 1, 0, 0];
 
@@ -27,7 +25,7 @@ while continua == True:
     tipo_erro = [];
 
     def soma(i):
-        return parametros[0] + parametros[1] * v[i][1] + parametros[2] * v[i][2];
+        return w[0] + w[1] * v[i][1] + w[2] * v[i][2];
 
     resultados = [soma(i)for i in range(len(v))];
 
@@ -57,11 +55,8 @@ while continua == True:
         S = [0, 0, 0];
         if (len(divergencias) == 0):
             print("Não há mais divergências");
-            print(resultados);
-            print(resultados_testados);
             return False;
         else:
-            parametros_antigos = parametros;
             for i in range(len(divergencias)):
                 if (tipo_erro[i] == "+"):
                     S[0] += divergencias[i][0];
@@ -71,16 +66,15 @@ while continua == True:
                     S[0] -= divergencias[i][0];
                     S[1] -= divergencias[i][1];
                     S[2] -= divergencias[i][2];
-            parametros[0] = parametros_antigos[0] + taxa_aprendizado * S[0];
-            parametros[1] = parametros_antigos[1] + taxa_aprendizado * S[1];
-            parametros[2] = parametros_antigos[2] + taxa_aprendizado * S[2];
-            print("Parametros atuais: " + str(parametros));
-            print("Parametros antigos: " + str(parametros_antigos));
+            w[0] = w[0] + taxa_aprendizado * S[0];
+            w[1] = w[1] + taxa_aprendizado * S[1];
+            w[2] = w[2] + taxa_aprendizado * S[2];
             print("S: " + str(S));
+            print("W: " + str(w));
             print("Tipo de erro: " + str(tipo_erro));
             print("Divergências: " + str(divergencias));
             print("\n");
             return True;
     continua = começaAprendizado();
 
-print(contador);
+print("Numero de processos: " + str(contador));
